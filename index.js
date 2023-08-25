@@ -1,4 +1,5 @@
-import { program } from "commander";
+import { Command } from "commander";
+
 import {
   listContacts,
   getContactById,
@@ -6,6 +7,18 @@ import {
   updateContactById,
   removeContactById,
 } from "./contacts.js";
+
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
+
+program.parse(process.argv);
+
+const argv = program.opts();
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
@@ -35,20 +48,9 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
   }
 };
 
-program
-  .option("-a, --action <type>")
-  // .option("-a, --action <type>")
-  .option("-i, --id <type>")
-  .option("-n, --name <type>")
-  .option("-e, --email <type>")
-  .action("-p, --phone <type>");
+invokeAction(argv);
 
-program.parse();
-
-const options = program.opts();
-// invokeAction(options);
-
-invokeAction({ action: "list" });
+// invokeAction({ action: "list" });
 
 // invokeAction({ action: "getContactById", id: "vza2RIzNGIwutCVCs4mCL" });
 
