@@ -41,7 +41,7 @@ export const updateContactById = async (contactId, data) => {
   if (index === -1) {
     return null;
   }
-  contacts[index] = { id, ...data };
+  contacts[index] = { contactId, ...data };
   await updateContacts(contacts);
   return contacts[index];
 };
